@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<title>SplitUp — Settle group expenses</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Kalam:wght@400;700&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="notebook">
+  <div class="spiral" aria-hidden="true"></div>
+
+  <div class="page">
+
+    <!-- ===== Landing screen ===== -->
+    <section id="landingScreen" class="screen">
+      <header class="page-head">
+        <h1 class="title">SplitUp</h1>
+        <div class="corner-note">
+          <span class="corner-label">Ledger&nbsp;/</span>
+          <span class="corner-value" id="todayDate"></span>
+        </div>
+      </header>
+      <p class="subtitle">Track shared expenses with friends or roommates, and settle up in the fewest payments possible.</p>
+
+      <div class="card tape">
+        <h2><span class="ring-number">1</span> Start a new group</h2>
+        <label>Who's in it?</label>
+        <div id="memberInputs" class="member-inputs">
+          <input type="text" class="member-input" placeholder="e.g. Alice">
+          <input type="text" class="member-input" placeholder="e.g. Bob">
+        </div>
+        <button id="addMemberFieldBtn" class="secondary small">+ add another person</button>
+        <button id="createGroupBtn" class="primary full">Create Group</button>
+        <p id="createError" class="error"></p>
+      </div>
+
+      <div class="card tape">
+        <h2><span class="ring-number">2</span> Join an existing group</h2>
+        <label for="joinCodeInput">Got a code from a friend?</label>
+        <input type="text" id="joinCodeInput" placeholder="e.g. K7QX2P" class="full-input mono" autocapitalize="characters">
+        <button id="joinGroupBtn" class="primary full">Join Group</button>
+        <p id="joinError" class="error"></p>
+      </div>
+    </section>
+
+    <!-- ===== Group screen ===== -->
+    <section id="groupScreen" class="screen hidden">
+      <header class="page-head">
+        <h1 class="title">SplitUp</h1>
+        <div class="corner-note">
+          <span class="corner-label">Ledger&nbsp;/</span>
+          <span class="corner-value" id="todayDate2"></span>
+        </div>
+      </header>
+
+      <div class="group-code-row">
+        <div class="code-circle">
+          <span class="code-circle-label">code</span>
+          <span id="groupCodeDisplay" class="code-circle-value"></span>
+        </div>
+        <button id="copyLinkBtn" class="secondary small">Copy invite link</button>
+      </div>
+      <p id="copyConfirm" class="hint hidden">✓ link copied — send it to your group</p>
+
+      <div class="card tape">
+        <h2>Add an expense</h2>
+        <label for="paidBySelect">Paid by</label>
+        <select id="paidBySelect"></select>
+
+        <label for="amountInput">Amount</label>
+        <input type="number" id="amountInput" step="0.01" min="0.01" placeholder="0.00" class="full-input mono">
+
+        <label for="descInput">What was it for?</label>
+        <input type="text" id="descInput" placeholder="e.g. Groceries" class="full-input">
+
+        <label>Split</label>
+        <div class="split-mode-toggle">
+          <button type="button" id="modeEqualBtn" class="mode-btn active">split equally</button>
+          <button type="button" id="modeCustomBtn" class="mode-btn">custom amounts</button>
+        </div>
+
+        <div id="equalSplitSection">
+          <label>Among</label>
+          <div id="splitCheckboxes" class="split-checkboxes"></div>
+        </div>
+
+        <div id="customSplitSection" class="hidden">
+          <label>Enter each person's exact share (leave blank if not involved)</label>
+          <div id="customShareInputs" class="custom-share-inputs"></div>
+          <p class="hint">running total: <span id="customTotal" class="mono">0.00</span></p>
+        </div>
+
+        <button id="addExpenseBtn" class="primary full">Add Expense</button>
+        <p id="expenseError" class="error"></p>
+      </div>
+
+      <div class="card tape">
+        <h2>Balances</h2>
+        <ul id="balancesList" class="balances-list"></ul>
+      </div>
+
+      <div class="card tape">
+        <h2>Settle up</h2>
+        <p class="hint">Fewest payments needed to clear every balance — see the README for how this is computed.</p>
+        <button id="simplifyBtn" class="primary full">Show Settlement Plan</button>
+        <ul id="settlementList" class="settlement-list"></ul>
+      </div>
+
+      <div class="card tape">
+        <h2>Expense history</h2>
+        <ul id="expenseList" class="expense-list"></ul>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
